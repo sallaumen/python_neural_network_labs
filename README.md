@@ -20,6 +20,7 @@ pip3 install matplotlib<br>
 Status: **Working**
 
 Performance:
+
 ![Diagram](lib/MVP/MNIST/test_performance.png)
 
 Working Example

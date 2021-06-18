@@ -1,2 +1,2 @@
-if __name__ == 'main':
-    print("Hello world!")
+
+print("Software is currently only available as MVP file")

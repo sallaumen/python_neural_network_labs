@@ -31,4 +31,15 @@ Working Example
 <br>
 
 ### - CIFAR10
-Status: **Not Working**
+Status: **Working**
+
+Performance:
+
+![Diagram](lib/MVP/CIFAR10/test_performance.png)
+
+Working Example
+
+![Diagram](lib/MVP/CIFAR10/prediction.png)
+<br>
+<br>
+<br>

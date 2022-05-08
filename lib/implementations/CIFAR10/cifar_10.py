@@ -79,7 +79,7 @@ model.compile(loss='sparse_categorical_crossentropy', optimizer='SGD', metrics=[
 """# Train"""
 print("\n\nTrain")
 start_training_time = time.time()
-epochs = 3
+epochs = 5
 model.fit(x=x_train, y=y_train, epochs=epochs)
 end_training_time = time.time()
 print("Total training time using {0} epochs: {1} seconds".format(epochs, end_training_time - start_training_time))

@@ -40,15 +40,15 @@ print("\n\nGetting data")
 y_test = y_test.reshape(-1, )  # Transposta
 y_train = y_train.reshape(-1, )
 
-print(x_train.shape, y_train.shape)
-print(x_test.shape, y_test.shape)
+# print(x_train.shape, y_train.shape)
+# print(x_test.shape, y_test.shape)
 
 """# Analysing data"""
 print("\n\nAnalysing data")
 classes = ["airplane", "automobile", "bird", "cat", "deer", "dog", "frog", "horse", "ship", "truck"]
 
-plot_sample(x_train, y_train, 7)
-plot_range(x_train, y_train, classes)
+# plot_sample(x_train, y_train, 7)
+# plot_range(x_train, y_train, classes)
 
 """# Prepare Data"""
 
@@ -74,36 +74,35 @@ model = models.Sequential([
 ])
 
 model.compile(loss='sparse_categorical_crossentropy', optimizer='SGD', metrics=['accuracy'])
-# model.build(input_shape)
-model.summary()
+# model.summary()
 
 """# Train"""
 print("\n\nTrain")
 start_training_time = time.time()
-epochs = 1
+epochs = 3
 model.fit(x=x_train, y=y_train, epochs=epochs)
 end_training_time = time.time()
 print("Total training time using {0} epochs: {1} seconds".format(epochs, end_training_time - start_training_time))
 
 """# Evaluate"""
-print("\n\nEvaluate")
-test_loss, test_acc = model.evaluate(x_test, y_test)
-print("Test loss: {}, Test Accuracy: {}".format(test_loss, test_acc))
+# print("\n\nEvaluate")
+# test_loss, test_acc = model.evaluate(x_test, y_test)
+# print("Test loss: {}, Test Accuracy: {}".format(test_loss, test_acc))
 
-y_pred = model.predict(x_test)
-y_pred_classes = np.argmax(y_pred, axis=1)
+# y_pred = model.predict(x_test)
+# y_pred_classes = np.argmax(y_pred, axis=1)
 # Creating classes array
-y_pred_classes_str = []
-for i in y_pred_classes:
-    y_pred_classes_str.append(classes[i])
+# y_pred_classes_str = []
+# for i in y_pred_classes:
+#     y_pred_classes_str.append(classes[i])
+#
+# print(y_pred, y_pred_classes)
 
-print(y_pred, y_pred_classes)
-
-random_idx = np.random.choice(len(x_test))
-x_sample = x_test[random_idx]
-
-y_sample_true = classes[y_test[random_idx]]
-y_sample_pred_class = y_pred_classes_str[random_idx]
-
-plt.title("Predicated: {}, True: {}".format(y_sample_pred_class, y_sample_true, frozenset=16))
-plt.imshow(x_sample.reshape(32, 32, 3))
+# random_idx = np.random.choice(len(x_test))
+# x_sample = x_test[random_idx]
+#
+# y_sample_true = classes[y_test[random_idx]]
+# y_sample_pred_class = y_pred_classes_str[random_idx]
+#
+# plt.title("Predicated: {}, True: {}".format(y_sample_pred_class, y_sample_true, frozenset=16))
+# plt.imshow(x_sample.reshape(32, 32, 3))

@@ -53,16 +53,16 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 print("\n\nTrain")
 
 start_training_time = time.time()
-epochs = 5
+epochs = 3
 model.fit(x=x_train, y=y_train, epochs=epochs)
 end_training_time = time.time()
 print("Total training time using {0} epochs: {1} seconds".format(epochs, end_training_time - start_training_time))
 
 """# Evaluate"""
-print("Evaluating")
-
-test_loss, test_acc = model.evaluate(x_test, y_test)
-print("Test Loss: {}, Test Accuracy: {}".format(test_loss, test_acc))
+# print("Evaluating")
+#
+# test_loss, test_acc = model.evaluate(x_test, y_test)
+# print("Test Loss: {}, Test Accuracy: {}".format(test_loss, test_acc))
 
 # y_pred = model.predict(x_test)
 # y_pred_classes = np.argmax(y_pred, axis=1)

@@ -62,29 +62,15 @@ plot_range(x_train, y_train, classes)
 x_train = x_train / 255.0
 x_test = x_test / 255.0
 
-"""# Model - FCNN"""
-
-# Modelo RUIM FCNN
-model = models.Sequential()
-model.add(layers.Flatten(input_shape=(32,32,3)))
-model.add(layers.Dense(3000, activation='relu'))
-model.add(layers.Dense(1000, activation='relu'))
-model.add(layers.Dense(10, activation='softmax'))
-
-model.compile(loss='sparse_categorical_crossentropy', optimizer='SGD', metrics=('accuracy'))
-model.summary()
-
-# Modelo bom CNN
-
-cnn = models.Sequential([
+"""# Model - CNN"""
+model = models.Sequential([
     layers.Conv2D(filters=32, kernel_size=(3, 3), activation='relu', input_shape=(32, 32, 3)),
     layers.MaxPooling2D((2, 2)),
-    
     layers.Conv2D(filters=64, kernel_size=(3, 3), activation='relu'),
     layers.MaxPooling2D((2, 2)),
-    
     layers.Flatten(),
     layers.Dense(64, activation='relu'),
+    layers.Dropout(0.5),
     layers.Dense(10, activation='softmax')
 ])
 

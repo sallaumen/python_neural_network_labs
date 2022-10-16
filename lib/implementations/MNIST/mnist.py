@@ -39,12 +39,12 @@ x_test = x_test.reshape(x_test.shape[0], -1)
 
 """# Create Model - Fully Connected Neural Network"""
 
-model = Sequential()
-
-model.add(Dense(units=128, input_shape=(784,), activation='relu'))
-model.add(Dense(units=128, activation='relu'))
-model.add(Dropout(0.25))
-model.add(Dense(units=10, activation='softmax'))
+model = Sequential([
+    Dense(units=128, input_shape=(784,), activation='relu'),
+    Dense(units=128, activation='relu'),
+    Dropout(0.5),
+    Dense(units=10, activation='softmax')
+])
 
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 # model.summary()

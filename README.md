@@ -24,7 +24,7 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-The first run downloads the dataset. CPU execution is supported; GPU setup depends on your platform and TensorFlow installation.
+The first run downloads the dataset. CPU execution is supported; GPU setup depends on your platform and TensorFlow installation. `requirements.txt` pins the versions used for the current validation; Python 3.13.16 was used for that run.
 
 ## Run
 
@@ -45,6 +45,8 @@ python -m compileall -q lib tests
 ```
 
 These quick checks do not download datasets or run TensorFlow training. For a full validation, run each command above in an environment with TensorFlow installed and record the Python, TensorFlow, hardware, and dataset versions alongside results.
+
+Both maintained CLI commands completed three epochs and held-out evaluation on 7 October 2026. The [validation record](https://github.com/sallaumen/elixir_vs_python_nn_performance_comparison/blob/master/docs/validation-2026-10-07.md) describes the environment, dataset checksums, and the limits of these single runs.
 
 ## Historical figures
 

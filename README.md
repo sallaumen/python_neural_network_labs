@@ -1,45 +1,58 @@
-# Python Neural Network labs
-Python implementation of MNIST and CIFAR10 neural networks
+# Python neural network experiments
 
-## Installation
+Python implementations of the MNIST and CIFAR-10 image classifiers from Lucas Campos Tavano's Computer Engineering capstone project at UTFPR. This repository contains runnable training scripts and preserves the original notebooks and figures under [`lib/MVP/`](lib/MVP/).
 
-Python, Matplot, Numpy, TensorFlow, Keras<br>
->sudo apt install python3-pip<br>
-pip3 install numpy<br>
-pip3 install tensorflow<br>
-pip3 install matplotlib<br>
+The [comparison overview](https://github.com/sallaumen/elixir_vs_python_nn_performance_comparison) links this repository to the Elixir implementation and explains the limits of comparing their historical results.
 
-## Execution
+## Experiments
 
-> python3 main.py 
+| Dataset | Model | Optimizer | Epochs | Test evaluation |
+| --- | --- | --- | ---: | --- |
+| MNIST | Dense 128 → Dense 128 → Dropout 0.5 → Dense 10 | Adam | 3 by default | Categorical cross-entropy and accuracy |
+| CIFAR-10 | Conv 32 → Pool → Conv 64 → Pool → Dense 64 → Dense 10 | SGD | 3 by default | Sparse categorical cross-entropy and accuracy |
 
-(will changed in te future)
+Each CLI run sets the Keras random seed to 10. Input pixels are scaled to `[0, 1]`. MNIST images are flattened to 784 features; CIFAR-10 images retain their 32 × 32 × 3 shape. The timer measures training (`model.fit`) only. Evaluation uses the datasets' separate test splits after training.
 
-## Current status:
-### - MNIST
-Status: **Working**
+## Setup
 
-Performance:
+Use a Python version supported by your TensorFlow release. See the [official TensorFlow installation guide](https://www.tensorflow.org/install/pip) for platform and GPU requirements.
 
-![Diagram](lib/MVP/MNIST/test_performance.png)
+```sh
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
 
-Working Example
+The first run downloads the dataset. CPU execution is supported; GPU setup depends on your platform and TensorFlow installation.
 
-![Diagram](lib/MVP/MNIST/prediction.png)
-<br>
-<br>
-<br>
+## Run
 
-### - CIFAR10
-Status: **Working**
+From the repository root:
 
-Performance:
+```sh
+python -m lib.main mnist
+python -m lib.main cifar10 --epochs 3
+```
 
-![Diagram](lib/MVP/CIFAR10/test_performance.png)
+The commands print training duration, test loss, and test accuracy. Use `python -m lib.main --help` for CLI options. The archived notebooks may require extra plotting and analysis libraries; they are historical artifacts, not the maintained CLI.
 
-Working Example
+## Checks
 
-![Diagram](lib/MVP/CIFAR10/prediction.png)
-<br>
-<br>
-<br>
+```sh
+python -m unittest discover -s tests
+python -m compileall -q lib tests
+```
+
+These quick checks do not download datasets or run TensorFlow training. For a full validation, run each command above in an environment with TensorFlow installed and record the Python, TensorFlow, hardware, and dataset versions alongside results.
+
+## Historical figures
+
+The figures below come from the original project. They are not measurements produced by the current CLI.
+
+| Dataset | Recorded performance | Example prediction |
+| --- | --- | --- |
+| MNIST | [Performance](lib/MVP/MNIST/test_performance.png) | [Prediction](lib/MVP/MNIST/prediction.png) |
+| CIFAR-10 | [Performance](lib/MVP/CIFAR10/test_performance.png) | [Prediction](lib/MVP/CIFAR10/prediction.png) |
+
+See the [MNIST notebook](lib/MVP/MNIST/MNIST_MVP.ipynb) and [CIFAR-10 notebook](lib/MVP/CIFAR10/CIFAR10_MVP.ipynb) for the original exploratory work.

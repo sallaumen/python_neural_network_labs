@@ -1,70 +1,47 @@
-# -*- coding: utf-8 -*-
-import numpy as np
-import matplotlib.pyplot as plt
-# %matplotlib inline
-import keras
-from keras.utils import np_utils
-from keras.models import Sequential
-from keras.layers import Dense, Dropout
-from sklearn.metrics import confusion_matrix
-import seaborn as sns
-import time
-from keras.datasets import mnist
+"""Fully connected MNIST classifier from the original Python experiment."""
 
-np.random.seed(10)
+from ...experiment import run_training
 
-"""# Data"""
 
-(x_train, y_train), (x_test, y_test) = mnist.load_data()
+def load_data():
+    from tensorflow.keras.datasets import mnist
 
-# print(x_train.shape, y_train.shape)
-# print(x_test.shape, y_test.shape)
+    return mnist.load_data()
 
-"""# Visualize Examples"""
 
-num_classes = 10
+def prepare_data(training, test):
+    from tensorflow.keras.utils import to_categorical
 
-y_train = keras.utils.np_utils.to_categorical(y_train, num_classes)
-y_test = keras.utils.np_utils.to_categorical(y_test, num_classes)
+    x_train, y_train = training
+    x_test, y_test = test
+    x_train = x_train.reshape(len(x_train), 784).astype("float32") / 255.0
+    x_test = x_test.reshape(len(x_test), 784).astype("float32") / 255.0
+    return (
+        (x_train, to_categorical(y_train, 10)),
+        (x_test, to_categorical(y_test, 10)),
+    )
 
-"""# Prepare Data"""
 
-# Normalize Data
-x_train = x_train / 255.0
-x_test = x_test / 255.0
+def build_model():
+    from tensorflow import keras
 
-# Reshape Data
-x_train = x_train.reshape(x_train.shape[0], -1)
-x_test = x_test.reshape(x_test.shape[0], -1)
+    model = keras.Sequential(
+        [
+            keras.layers.Input(shape=(784,)),
+            keras.layers.Dense(128, activation="relu"),
+            keras.layers.Dense(128, activation="relu"),
+            keras.layers.Dropout(0.5),
+            keras.layers.Dense(10, activation="softmax"),
+        ]
+    )
+    model.compile(
+        loss="categorical_crossentropy", optimizer="adam", metrics=["accuracy"]
+    )
+    return model
 
-"""# Create Model - Fully Connected Neural Network"""
 
-model = Sequential([
-    Dense(units=128, input_shape=(784,), activation='relu'),
-    Dense(units=128, activation='relu'),
-    Dropout(0.5),
-    Dense(units=10, activation='softmax')
-])
+def run(epochs=3):
+    from tensorflow import keras
 
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-# model.summary()
-
-"""# Train"""
-print("\n\nTrain")
-
-start_training_time = time.time()
-epochs = 3
-model.fit(x=x_train, y=y_train, epochs=epochs)
-end_training_time = time.time()
-print("Total training time using {0} epochs: {1} seconds".format(epochs, end_training_time - start_training_time))
-
-"""# Evaluate"""
-# print("Evaluating")
-#
-# test_loss, test_acc = model.evaluate(x_test, y_test)
-# print("Test Loss: {}, Test Accuracy: {}".format(test_loss, test_acc))
-
-# y_pred = model.predict(x_test)
-# y_pred_classes = np.argmax(y_pred, axis=1)
-# print(y_pred)
-# print(y_pred_classes)
+    keras.utils.set_random_seed(10)
+    return run_training(load_data, prepare_data, build_model, epochs)
